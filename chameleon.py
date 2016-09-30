@@ -110,7 +110,8 @@ def getjenkins(uri):
     base64string = base64.b64encode('{}:{}'.format(USERNAME, PASSWORD))
     req.add_header("Authorization", "Basic {}".format(base64string))
     f = urllib2.urlopen(req)
-    return json.loads(f.read())
+    r = f.read()
+    return json.loads(r)
 
 def fetchstatus():
     global STATUS
@@ -118,14 +119,14 @@ def fetchstatus():
         jobs = ["hydra-core", "lizard-client", "lizard-nxt"]
         response = []
         for job in jobs:
-            res = getjenkins(job)
-            print(res)
-            for branch in ["master"]:
-                uri = "{}/job/{}/lastBuild/api/json?pretty=true".format(job, branch)
-                res = getjenkins(uri)
-                response.append(res["result"])
-                if res["building"]:
-                    response.append("BUILDING")
+            res = getjenkins("{}/api/json?pretty=true".format(job))
+            for branch in res["jobs"]:
+                if branch["name"] == "master" or branch["name"].startswith("fixes"):
+                    uri = "{}/job/{}/lastBuild/api/json?pretty=true".format(job, branch["name"])
+                    res = getjenkins(uri)
+                    response.append(res["result"])
+                    if res["building"]:
+                        response.append("BUILDING")
         new = 'none'
         for str, status in [('Failure', 'broken'), ('Aborted', 'broken'), ('Building', 'building'), ('Unstable', 'unstable'), ('Disabled', 'unstable'), ('Success', 'stable')]:
             if str.upper() in response:
