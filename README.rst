@@ -21,20 +21,23 @@ What does it mean?
 
 Lights dictionary, Jenkins mode:
 
-PERLIN NOISE          | Building...
-ALL GREEN             | All builds successfull
-ALL ORANGE            | At least one build is unstable
-ALL RED               | At least one build failed
-MAIN GREEN, WALK RED  | All builds successfull, but do not walk in asking questions
-MAIN ORANGE, WALK RED | At least one build is unstable, do not walk in asking questions
-ORANGE FLASHING       | Get up, stand up
-ORANGE GOING BANANAS  | The light is trying to tell you something...
-ALL BLINKING TWICE    | Jenkins unreachable, could not determine build status
-ALL OFF               | Out of office, go home
++-----------------------+-----------------------------------------------------------------+
+| PERLIN NOISE          | Building...                                                     |
+| ALL GREEN             | All builds successfull                                          |
+| ALL ORANGE            | At least one build is unstable                                  |
+| ALL RED               | At least one build failed                                       |
+| MAIN GREEN, WALK RED  | All builds successfull, but do not walk in asking questions     |
+| MAIN ORANGE, WALK RED | At least one build is unstable, do not walk in asking questions |
+| ORANGE FLASHING       | Get up, stand up                                                |
+| ORANGE GOING BANANAS  | The light is trying to tell you something...                    |
+| ALL BLINKING TWICE    | Jenkins unreachable, could not determine build status           |
+| ALL OFF               | Out of office, go home                                          |
++-----------------------+-----------------------------------------------------------------+
 
 Lights dictionary, traffic mode:
 
-MAIN GREEN, WALK RED  | Drive, don't walk; push the button to cross
-MAIN RED, WALK GREEN  | Walk, don't drive; push the button when tired
-ALL OFF               | Out of office, go home
-
++-----------------------+-----------------------------------------------+
+| MAIN GREEN, WALK RED  | Drive, don't walk; push the button to cross   |
+| MAIN RED, WALK GREEN  | Walk, don't drive; push the button when tired |
+| ALL OFF               | Out of office, go home                        |
++-----------------------+-----------------------------------------------+
