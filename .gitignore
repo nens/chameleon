@@ -1,0 +1,4 @@
+# Pyc/pyo files.
+*.py[co]
+
+statusfile
