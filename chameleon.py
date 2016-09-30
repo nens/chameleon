@@ -2,13 +2,18 @@
 # (c) Nelen & Schuurmans, see LICENSE.rst.
 
 import RPi.GPIO as GPIO
+import base64
+import json
 import random
 import time
-import urllib
+import urllib2
 
 from datetime import datetime
 from threading import Thread
 
+
+USERNAME = 'sa_stoplicht_jenk'
+PASSWORD = 'A9TXRfzy6QwoZnGrMFI2'
 
 STATUS = 'none'
 
@@ -102,18 +107,22 @@ MORSE = {
 def fetchstatus():
   global STATUS
   while ALIVE:
-    #link = "http://buildbot.lizardsystem.nl/jenkins/view/Lizard%20NXT"
     link = "https://jenkins.lizard.net/job/nens/job"
     jobs = ["hydra-core", "lizard-client", "lizard-nxt"]
-    response = ""
+    response = []
     for job in jobs:
-        f = urllib.urlopen("{}/{}/job/master/lastBuild/api/json?pretty=true".format(link, job))
-        response += f.read()
-    print(response)
-    quit()
+        url = "{}/{}/job/master/lastBuild/api/json?pretty=true".format(link, job)
+        req = urllib2.Request(url)
+        base64string = base64.b64encode('%s:%s' % (USERNAME, PASSWORD))
+        req.add_header("Authorization", "Basic %s" % base64string)
+        f = urllib2.urlopen(req)
+        res = json.loads(f.read())
+        response.append(res["result"])
+        if res["building"]:
+          response.append("BUILDING")
     new = 'none'
-    for str, status in [('Failed', 'broken'), ('Aborted', 'broken'), ('In progress', 'building'), ('Unstable', 'unstable'), ('Disabled', 'unstable'), ('Success', 'stable')]:
-      if ' tooltip="{}"'.format(str) in response:
+    for str, status in [('Failure', 'broken'), ('Aborted', 'broken'), ('Building', 'building'), ('Unstable', 'unstable'), ('Disabled', 'unstable'), ('Success', 'stable')]:
+      if str.upper() in response:
         new = status
         break
     STATUS = new
