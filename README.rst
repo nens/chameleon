@@ -13,7 +13,7 @@ Setup
 
 git clone https://github.com/nens/chameleon.git
 
-sudo python chameleon.py
+sudo python chameleon.py &
 
 
 What does it mean?
