@@ -11,7 +11,7 @@ burning the GPIO or the entire RasPi!
 Setup
 -----
 
-git clone git@github.com:nens/chameleon.git
+git clone https://github.com/nens/chameleon.git
 
 sudo python chameleon.py
 
