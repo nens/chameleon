@@ -12,6 +12,7 @@ from datetime import datetime
 from threading import Thread
 
 
+BASE_URL = 'https://jenkins.lizard.net/job/nens/job'
 USERNAME = 'sa_stoplicht_jenk'
 PASSWORD = 'A9TXRfzy6QwoZnGrMFI2'
 
@@ -104,29 +105,35 @@ MORSE = {
   'z':'--..',
 }
 
+def getjenkins(uri):
+    req = urllib2.Request("{}/{}".format(BASE_URL, uri))
+    base64string = base64.b64encode('%s:%s' % (USERNAME, PASSWORD))
+    req.add_header("Authorization", "Basic %s" % base64string)
+    f = urllib2.urlopen(req)
+    return json.loads(f.read())
+}
+
 def fetchstatus():
-  global STATUS
-  while ALIVE:
-    link = "https://jenkins.lizard.net/job/nens/job"
-    jobs = ["hydra-core", "lizard-client", "lizard-nxt"]
-    response = []
-    for job in jobs:
-        url = "{}/{}/job/master/lastBuild/api/json?pretty=true".format(link, job)
-        req = urllib2.Request(url)
-        base64string = base64.b64encode('%s:%s' % (USERNAME, PASSWORD))
-        req.add_header("Authorization", "Basic %s" % base64string)
-        f = urllib2.urlopen(req)
-        res = json.loads(f.read())
-        response.append(res["result"])
-        if res["building"]:
-          response.append("BUILDING")
-    new = 'none'
-    for str, status in [('Failure', 'broken'), ('Aborted', 'broken'), ('Building', 'building'), ('Unstable', 'unstable'), ('Disabled', 'unstable'), ('Success', 'stable')]:
-      if str.upper() in response:
-        new = status
-        break
-    STATUS = new
-    time.sleep(15)
+    global STATUS
+    while ALIVE:
+        jobs = ["hydra-core", "lizard-client", "lizard-nxt"]
+        response = []
+        for job in jobs:
+            res = getjenkins(job)
+            print(res)
+            for branch in ["master"]:
+                uri = "{}/job/{}/lastBuild/api/json?pretty=true".format(job, branch)
+                res = getjenkins(uri)
+                response.append(res["result"])
+                if res["building"]:
+                    response.append("BUILDING")
+        new = 'none'
+        for str, status in [('Failure', 'broken'), ('Aborted', 'broken'), ('Building', 'building'), ('Unstable', 'unstable'), ('Disabled', 'unstable'), ('Success', 'stable')]:
+            if str.upper() in response:
+                new = status
+                break
+        STATUS = new
+        time.sleep(15)
 
 def setup():
   GPIO.setmode(GPIO.BOARD)
