@@ -45,19 +45,19 @@ WEST = [13, 29, 23]
 NONE = []
 
 NEIGHBOURS = {
-  NORTH_RED : [NORTH_GREEN, EAST_RED, EAST_ORANGE],
-  NORTH_GREEN : [NORTH_RED, EAST_GREEN, EAST_ORANGE],
-  EAST_RED : [EAST_ORANGE, NORTH_RED],
-  EAST_ORANGE : [EAST_RED, EAST_GREEN] + NORTH,
-  EAST_GREEN : [EAST_ORANGE, NORTH_GREEN]
+    NORTH_RED : [NORTH_GREEN, EAST_RED, EAST_ORANGE],
+    NORTH_GREEN : [NORTH_RED, EAST_GREEN, EAST_ORANGE],
+    EAST_RED : [EAST_ORANGE, NORTH_RED],
+    EAST_ORANGE : [EAST_RED, EAST_GREEN] + NORTH,
+    EAST_GREEN : [EAST_ORANGE, NORTH_GREEN]
 }
 
 ACROSS = {
-  NORTH_RED : 11,
-  NORTH_GREEN : 7,
-  EAST_RED : 13,
-  EAST_ORANGE : 29,
-  EAST_GREEN : 23
+    NORTH_RED : 11,
+    NORTH_GREEN : 7,
+    EAST_RED : 13,
+    EAST_ORANGE : 29,
+    EAST_GREEN : 23
 }
 
 ON = 8
@@ -107,11 +107,10 @@ MORSE = {
 
 def getjenkins(uri):
     req = urllib2.Request("{}/{}".format(BASE_URL, uri))
-    base64string = base64.b64encode('%s:%s' % (USERNAME, PASSWORD))
-    req.add_header("Authorization", "Basic %s" % base64string)
+    base64string = base64.b64encode('{}:{}'.format(USERNAME, PASSWORD))
+    req.add_header("Authorization", "Basic {}".format(base64string))
     f = urllib2.urlopen(req)
     return json.loads(f.read())
-}
 
 def fetchstatus():
     global STATUS
