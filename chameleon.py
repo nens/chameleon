@@ -116,7 +116,7 @@ def getjenkins(uri):
 def fetchstatus():
     global STATUS
     while ALIVE:
-        jobs = ["hydra-core", "lizard-client", "lizard-nxt"]
+        jobs = ["hydra-core", "lizard-client", "lizard-nxt", "threedi"]
         response = []
         for job in jobs:
             res = getjenkins("{}/api/json?pretty=true".format(job))
