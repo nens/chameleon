@@ -123,10 +123,13 @@ def fetchstatus():
             for branch in res["jobs"]:
                 if branch["name"] == "master" or branch["name"].startswith("fixes"):
                     uri = "{}/job/{}/lastBuild/api/json?pretty=true".format(job, branch["name"])
-                    res = getjenkins(uri)
-                    response.append(res["result"])
-                    if res["building"]:
-                        response.append("BUILDING")
+                    try:
+                        res = getjenkins(uri)
+                        response.append(res["result"])
+                        if res["building"]:
+                            response.append("BUILDING")
+                    except:
+                        response.append("ERROR")
         new = 'none'
         for str, status in [('Failure', 'broken'), ('Aborted', 'broken'), ('Building', 'building'), ('Unstable', 'unstable'), ('Disabled', 'unstable'), ('Success', 'stable')]:
             if str.upper() in response:
