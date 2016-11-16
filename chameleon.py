@@ -16,7 +16,7 @@ BASE_URL = 'https://jenkins.lizard.net/job/nens/job'
 USERNAME = 'sa_stoplicht_jenk'
 PASSWORD = 'A9TXRfzy6QwoZnGrMFI2'
 
-STATUS = 'none'
+STATUS = 'startup'
 
 ALIVE = True
 
@@ -268,6 +268,12 @@ def status(mode):
       setall(GREENS if available() else dontwalk(GREENS))
     elif STATUS == 'unstable':
       setall(ORANGES if available() else dontwalk(ORANGES))
+    elif STATUS == 'startup':
+      ZERO = []
+      ONE = [WEST_GREEN, EAST_GREEN]
+      TWO = ONE + ORANGES
+      THREE = TWO + [WEST_RED, EAST_RED]
+      walk(0.37, [ZERO, ONE, TWO, THREE])
     elif STATUS == 'none':
       HELP = [SOUTH_RED, WEST_ORANGE]
       FLASH = HELP + NORTH + EAST
