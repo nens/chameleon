@@ -291,7 +291,7 @@ try:
     loop(0.37, [NONE], MODE_OFF)
     traffic(MODE_MANUAL)
     loop(0.74, [NONE, ORANGES], MODE_STANDUP)
-    morse(0.125, 'carsten ga nou eens eten', ORANGES, MODE_LUNCH)
+    morse(0.125, 'de gebruiker is pi het wachtwoord is niethuilen', ORANGES, MODE_LUNCH)
     status(MODE_STATUS)
 except KeyboardInterrupt:
   GPIO.cleanup()
