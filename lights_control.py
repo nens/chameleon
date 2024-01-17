@@ -1,5 +1,5 @@
 from gpiozero import Button, LED
-from data import fetch_data, max_rain
+from data_interface import fetch_data, max_rain
 
 """
 All the factors are measured over a certain upcoming time period; an hour by default.
@@ -75,3 +75,6 @@ def fetch_weather_data(timeframe=timeframe):
     return temperature, windspeed, rain_peak
 
 
+def main():
+    for led in ALL:
+        led.off()
