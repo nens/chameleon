@@ -1,1 +1,2 @@
-python-flask
+python3-flask
+python3-flask-httpauth
