@@ -64,8 +64,8 @@ for led in ALL.values():
     led.off()
 
 
-
-with open("TOKEN", "r") as f:
+p = Path(__file__).with_name("TOKEN")
+with p.open("r") as f:
     API_TOKEN = f.read()
 
 tokens = {
@@ -126,4 +126,3 @@ def action():
 
 if __name__ == "__main__":
    app.run(host='0.0.0.0', port=5000, debug=True)
-
