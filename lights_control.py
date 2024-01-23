@@ -1,6 +1,11 @@
-from gpiozero import Button, LED
+from gpiozero import Button, LED, Device
+from gpiozero.pins.pigpio import PiGPIOFactory
 from flask import Flask, request, jsonify
 from flask_httpauth import HTTPTokenAuth
+from pathlib import Path
+
+
+Device.pin_factory = PiGPIOFactory()
 
 
 NORTH_RED = LED("BOARD5")
