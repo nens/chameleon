@@ -1,6 +1,6 @@
 from gpiozero import Button, LED
 from flask import Flask, request, jsonify
-app = Flask(__name__)
+from flask_httpauth import HTTPTokenAuth
 
 
 NORTH_RED = LED("BOARD5")
@@ -58,6 +58,28 @@ MODE_STATUS = 5
 for led in ALL.values():
     led.off()
 
+
+
+with open("TOKEN", "r") as f:
+    API_TOKEN = f.read()
+
+tokens = {
+    API_TOKEN: "internal"
+}
+
+app = Flask(__name__)
+auth = HTTPTokenAuth(scheme='Bearer')
+
+@auth.verify_token
+def verify_token(token):
+    if token in tokens:
+        return tokens[token]
+
+
+@auth.error_handler
+def auth_error(status):
+    return jsonify({"status": status, "message": "Access denied"}), status
+
 @app.route("/")
 def main():
     # For each led, read the led state and store it in the leds dictionary:
@@ -72,6 +94,7 @@ def main():
 
 # The function below is executed when someone requests a URL with the pin number and action in it:
 @app.route("/set_state", methods=['POST'])
+@auth.login_required
 def action():
     input_json = request.get_json(force=True)
     if "pin" not in input_json.keys() or "state" not in input_json.keys():
@@ -98,3 +121,4 @@ def action():
 
 if __name__ == "__main__":
    app.run(host='0.0.0.0', port=5000, debug=True)
+
