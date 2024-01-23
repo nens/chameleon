@@ -33,6 +33,7 @@ ALL = {
 }
 
 
+# None of the buttons are currently used but this may change in the future
 ON = Button("BOARD8")
 OFF = Button("BOARD10")
 MANUAL = Button("BOARD12")
