@@ -3,6 +3,7 @@ from gpiozero.pins.pigpio import PiGPIOFactory
 from flask import Flask, request, jsonify
 from flask_httpauth import HTTPTokenAuth
 from pathlib import Path
+import os
 
 
 Device.pin_factory = PiGPIOFactory()
@@ -19,6 +20,8 @@ WEST_RED = LED("BOARD13")
 WEST_YELLOW = LED("BOARD29")
 WEST_GREEN = LED("BOARD23")
 
+NORTH_RED, NORTH_GREEN, EAST_RED, EAST_YELLOW, EAST_GREEN, SOUTH_RED, SOUTH_GREEN, WEST_RED, WEST_YELLOW, WEST_GREEN
+
 ALL = {
    "NORTH_RED": NORTH_RED,
    "NORTH_GREEN": NORTH_GREEN,
@@ -32,13 +35,27 @@ ALL = {
    "WEST_GREEN": WEST_GREEN
 }
 
+REDS = [NORTH_RED, EAST_RED, SOUTH_RED, WEST_RED]
+YELLOWS = [EAST_YELLOW, WEST_YELLOW]
+GREENS = [NORTH_GREEN, EAST_GREEN, SOUTH_GREEN, WEST_GREEN]
 
-# None of the buttons are currently used but this may change in the future
+NORTH = [NORTH_RED, NORTH_GREEN]
+EAST = [EAST_RED, EAST_YELLOW, EAST_GREEN]
+SOUTH = [SOUTH_RED, SOUTH_GREEN]
+WEST = [WEST_RED, WEST_YELLOW, WEST_GREEN]
+
 ON = Button("BOARD8")
 OFF = Button("BOARD10")
 MANUAL = Button("BOARD12")
 AUTO = Button("BOARD16")
-BUTTON = Button("BOARD18", bounce_time=0.3)
+BUTTON = Button("BOARD18", bounce_time=0.3, hold_time=3)
+
+
+def reboot_pi():
+    os.system("sudo reboot -h now")
+
+BUTTON.when_held = reboot_pi
+
 
 IN = [ON, OFF, MANUAL, AUTO, BUTTON]
 
@@ -116,4 +133,5 @@ def action():
 
 
 if __name__ == "__main__":
-   app.run(host='0.0.0.0', port=5000, debug=True)
+   app.run(host='0.0.0.0', port=5000)
+

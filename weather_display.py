@@ -10,13 +10,13 @@ Red >= 7 m/s
 Green >= 1 m/s, < 7 m/s
 Off = < 1 m/s
 
-East shows how much rain will fall at the highest peak
+West shows how much rain will fall at the highest peak
 Red >= 5 mm/h
 Orange < 5 mm/h, >= 2 mm/h
 Green < 2 mm/h, > 0 mm/h
 Off = 0 mm/h
 
-West shows how cold it is
+East shows how cold it is
 Green >= 20C
 Orange < 20C, >= 10C
 Red < 10C
@@ -54,24 +54,24 @@ def wind_lights(wind: int) -> dict:
 
 
 def rain_lights(rain: int) -> dict:
-    rain_light_states = dict.fromkeys(EAST, False)
+    rain_light_states = dict.fromkeys(WEST, False)
     if rain >= 5:
-        rain_light_states["EAST_RED"] = True
+        rain_light_states["WEST_RED"] = True
     elif 2 <= rain < 5:
-        rain_light_states["EAST_ORANGE"] = True
+        rain_light_states["WEST_YELLOW"] = True
     elif 0 < rain < 2:
-        rain_light_states["EAST_GREEN"] = True
+        rain_light_states["WEST_GREEN"] = True
     return rain_light_states
 
 
 def temperature_lights(temperature: int) -> dict:
-    temperature_light_states = dict.fromkeys(WEST, False)
+    temperature_light_states = dict.fromkeys(EAST, False)
     if temperature >= 20:
-        temperature_light_states["WEST_GREEN"] = True
+        temperature_light_states["EAST_GREEN"] = True
     elif 10 <= temperature < 20:
-        temperature_light_states["WEST_ORANGE"] = True
+        temperature_light_states["EAST_YELLOW"] = True
     elif temperature < 10:
-        temperature_light_states["WEST_RED"] = True
+        temperature_light_states["EAST_RED"] = True
     return temperature_light_states
 
 
@@ -104,7 +104,7 @@ def apply_light_states(light_states: dict) -> None:
 def main():
     temperature, windspeed, rain_peak = fetch_weather_data()
     if all(value is None for value in (temperature, windspeed, rain_peak)):
-        desired_light_states = dict.fromkeys(ALL, False)
+        desired_light_states = dict.fromkeys(ALL, True)
 
     else:
         wind_light_states = wind_lights(wind=windspeed)
@@ -117,3 +117,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
