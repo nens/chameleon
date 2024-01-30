@@ -22,7 +22,7 @@ Orange < 20C, >= 10C
 Red < 10C
 """
 
-API_URL = "http://localhost:5000/"
+API_URL = "http://localhost:80/"
 
 NORTH = ["NORTH_RED", "NORTH_GREEN"]
 EAST = ["EAST_RED", "EAST_YELLOW", "EAST_GREEN"]
