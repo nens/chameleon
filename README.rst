@@ -22,18 +22,31 @@ What does it mean?
 
 All the factors are measured over a certain upcoming time period; an hour by default.
 
+
 North shows whether it is blowing
+
 Red >= 7 m/s
+
 Green >= 1 m/s, < 7 m/s
+
 Off = < 1 m/s
 
+
 East shows how much rain will fall at the highest peak
+
 Red >= 5 mm/h
+
 Orange < 5 mm/h, >= 2 mm/h
+
 Green < 2 mm/h, > 0 mm/h
+
 Off = 0 mm/h
 
+
 West shows how cold it is
+
 Green >= 20C
+
 Orange < 20C, >= 10C
+
 Red < 10C
