@@ -21,7 +21,7 @@ def string_to_datetime(timestamp):
 
 
 def parse_rain_data(raindata):
-    split_response = raindata.strip().split("\r\n")
+    split_response = raindata.strip().split("\n")
     split_tuple_response = list(i.split("|") for i in split_response)
     return list({"timestamp": string_to_datetime(timestamp), "mmh": int(mmh)/100} for mmh, timestamp in split_tuple_response)
 
