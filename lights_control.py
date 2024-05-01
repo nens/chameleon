@@ -93,7 +93,7 @@ def verify_token(token):
 def auth_error(status):
     return jsonify({"status": status, "message": "Access denied"}), status
 
-@app.route("/")
+@app.route("/state")
 def main():
     # For each led, read the led state and store it in the leds dictionary:
     leds = dict((led, {'name': led, 'state': ALL[led].is_lit}) for led in ALL.keys())
