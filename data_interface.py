@@ -3,6 +3,11 @@ from zoneinfo import ZoneInfo
 from buienradar.buienradar import (get_data, parse_data)
 from buienradar.constants import (CONTENT, RAINCONTENT, SUCCESS)
 
+import logging
+# log buienradar library warnings
+logger = logging.getLogger()
+logging.basicConfig(filename='data_interface.log', level=logging.WARNING)
+
 timezone = ZoneInfo("Europe/Amsterdam")
 
 
