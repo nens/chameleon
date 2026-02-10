@@ -47,4 +47,4 @@ Red < 10C
 
 Server management
 -----------------
-The Raspberry Pi in the traffic light runs an ssh server, with the username `pi` and password `niethuilen`.
+The Raspberry Pi in the traffic light runs an ssh server at `trafficlight.nens`, with the username `pi` and password `niethuilen`.
